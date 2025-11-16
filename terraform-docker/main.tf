@@ -13,16 +13,35 @@ resource "docker_network" "demo" {
   name = "demo-net"
 }
 
-resource "docker_container" "nginx" {
-  name  = "demo-nginx"
-  image = "nginx:latest"
+module "postgres" {
+  source = "./modules/postgres"
 
-  networks_advanced {
-    name = docker_network.demo.name
-  }
+  postgres_user     = var.postgres_user
+  postgres_password = var.postgres_password
+  postgres_db       = var.postgres_db
 
-  ports {
-    internal = 80
-    external = 8080
-  }
+  network_name = docker_network.demo.name
+}
+
+module "backend" {
+  source = "./modules/backend"
+
+  db_host = "demo-postgres"
+  db_user = var.postgres_user
+  db_pass = var.postgres_password
+  db_name = var.postgres_db
+
+  network_name = docker_network.demo.name
+}
+
+module "nginx" {
+  source = "./modules/nginx"
+
+  network_name = docker_network.demo.name
+}
+
+module "redis" {
+  source = "./modules/redis"
+
+  network_name = docker_network.demo.name
 }

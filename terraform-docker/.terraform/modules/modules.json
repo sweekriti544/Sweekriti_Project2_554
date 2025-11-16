@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"backend","Source":"./modules/backend","Dir":"modules/backend"},{"Key":"nginx","Source":"./modules/nginx","Dir":"modules/nginx"},{"Key":"postgres","Source":"./modules/postgres","Dir":"modules/postgres"},{"Key":"redis","Source":"./modules/redis","Dir":"modules/redis"}]}
